@@ -1,27 +1,31 @@
 package com.pawpalace.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.pawpalace.model.Product;
-import com.pawpalace.repository.ProductRepository;
 
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductRepository repository;
+    // Temporary storage (instead of database)
+    private List<Product> products = new ArrayList<>();
 
+    // GET all products
     public List<Product> getAllProducts() {
-        return repository.findAll();
+        return products;
     }
 
+    // ADD product
     public Product addProduct(Product product) {
-        return repository.save(product);
+        products.add(product);
+        return product;
     }
 
+    // DELETE product
     public void deleteProduct(Long id) {
-        repository.deleteById(id);
+        products.removeIf(p -> p.getId().equals(id));
     }
 }
