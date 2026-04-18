@@ -14,14 +14,22 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    // ✅ Save product
+    public Product saveProduct(Product product) {
+        return repository.save(product);
+    }
+
+    // ✅ Get all products
     public List<Product> getAllProducts() {
         return repository.findAll();
     }
 
-    public Product addProduct(Product product) {
-        return repository.save(product);
+    // ✅ Get product by ID
+    public Product getProductById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
+    // ✅ Delete product
     public void deleteProduct(Long id) {
         repository.deleteById(id);
     }
