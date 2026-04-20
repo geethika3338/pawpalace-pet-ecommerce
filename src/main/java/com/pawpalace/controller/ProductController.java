@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pawpalace.model.Product;
@@ -37,7 +38,12 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id, @RequestParam String role) {
+
+        if (!role.equals("ADMIN")) {
+            return "Access denied. Only ADMIN can delete.";
+        }
+
         service.deleteProduct(id);
         return "Product deleted";
     }

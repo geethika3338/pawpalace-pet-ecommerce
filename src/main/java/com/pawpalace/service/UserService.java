@@ -13,12 +13,23 @@ public class UserService {
     private UserRepository repository;
 
     // REGISTER
-    public User register(User user) {
-        return repository.save(user);
+    public String register(User user) {
+
+        if (user.getEmail() == null || user.getPassword() == null) {
+            return "Email and Password required";
+        }
+
+        if (user.getRole() == null) {
+            user.setRole("USER");  // default role
+        }
+
+        repository.save(user);
+        return "User Registered Successfully";
     }
 
     // LOGIN
     public String login(String email, String password) {
+
         User user = repository.findByEmail(email);
 
         if (user == null) {
@@ -29,6 +40,6 @@ public class UserService {
             return "Invalid password";
         }
 
-        return "Login successful";
+        return "Login Successful - Role: " + user.getRole();
     }
 }
